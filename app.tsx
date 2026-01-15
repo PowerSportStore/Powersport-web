@@ -1,5 +1,6 @@
+
 import React, { useState, useEffect, useMemo } from 'react';
-import { Product, StoreData, ViewType, UserRole, CartItem } from './types';
+import { Product, StoreData, ViewType, UserRole, CartItem } from './types.ts';
 import { 
   Package, 
   PlusCircle, 
