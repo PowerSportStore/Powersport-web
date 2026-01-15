@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { Product, StoreData, ViewType, UserRole, CartItem } from './types';
+import { Product, StoreData, ViewType, UserRole, CartItem } from './types.ts';
 import { 
   Package, 
   PlusCircle, 
@@ -34,7 +34,7 @@ const App: React.FC = () => {
 
   useEffect(() => {
     if (storeCode) {
-      const baseCode = 'POWERSPORT'; // Siempre usamos la misma base de datos
+      const baseCode = 'POWERSPORT'; 
       const savedData = localStorage.getItem(`store_data_${baseCode}`);
       if (savedData) {
         setData(JSON.parse(savedData));
@@ -115,7 +115,6 @@ const App: React.FC = () => {
     setIsSyncing(true);
     try {
       let url = data.sheetId;
-      // Si pegó el link de edición, lo convertimos a export CSV
       if (url.includes('docs.google.com')) {
         const idMatch = url.match(/\/d\/([a-zA-Z0-9_-]{25,})/);
         if (idMatch) {
@@ -186,8 +185,6 @@ const App: React.FC = () => {
 
   return (
     <div className="flex flex-col h-screen bg-black overflow-hidden max-w-5xl mx-auto text-white">
-      
-      {/* HEADER TIPO LANDING */}
       <header className="no-print p-4 bg-slate-900/95 backdrop-blur-xl border-b border-white/10 flex justify-between items-center z-50 shadow-2xl">
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 bg-pink-600 rounded-xl flex items-center justify-center font-black italic shadow-lg shadow-pink-600/30 transform -rotate-3">PS</div>
@@ -208,7 +205,6 @@ const App: React.FC = () => {
         </div>
       </header>
 
-      {/* VISTA CLIENTE / ADMIN */}
       {userRole === 'admin' && view === 'inventory' && (
         <div className="no-print px-4 py-2 bg-black flex gap-2 border-b border-white/5">
           <button onClick={() => setDisplayMode('stock')} className={`flex-1 py-2 rounded-xl text-[9px] font-black uppercase italic border transition-all ${displayMode === 'stock' ? 'bg-white text-black' : 'text-slate-500 border-white/5'}`}>Gestión Interna</button>
@@ -219,7 +215,6 @@ const App: React.FC = () => {
       <main className="flex-1 overflow-y-auto no-scrollbar p-2 pb-32 bg-gradient-to-b from-slate-950 to-black">
         {view === 'inventory' && (
           <>
-            {/* HERO PARA CLIENTES */}
             {displayMode === 'catalog' && (
               <div className="p-4 mb-4 rounded-[2rem] bg-gradient-to-br from-pink-600/20 to-transparent border border-pink-600/10 text-center space-y-2">
                 <h2 className="text-xl font-black italic uppercase tracking-tighter text-white">Nuevos Ingresos</h2>
@@ -252,7 +247,6 @@ const App: React.FC = () => {
               </div>
             </div>
 
-            {/* PRODUCTOS */}
             <div className="grid grid-cols-3 gap-2 px-1">
               {filteredProducts.map(p => (
                 <div key={p.id} className="bg-slate-900/30 border border-white/5 rounded-2xl p-2 flex flex-col h-full hover:border-pink-600/30 transition-all">
@@ -319,12 +313,10 @@ const App: React.FC = () => {
                 {isSyncing ? 'Procesando...' : 'Guardar y Sincronizar'}
               </button>
             </div>
-            <p className="text-center text-[8px] text-slate-700 font-bold uppercase tracking-[0.3em]">PowerSport v4.0 • Enterprise Edition</p>
           </div>
         )}
       </main>
 
-      {/* BOTON CARRITO FLOTANTE */}
       {displayMode === 'catalog' && cart.length > 0 && !showCart && (
         <button onClick={() => setShowCart(true)} className="fixed bottom-10 right-6 bg-pink-600 w-16 h-16 rounded-full shadow-2xl flex items-center justify-center z-[60] border-4 border-black animate-bounce">
           <ShoppingCart className="w-7 h-7" />
@@ -332,7 +324,6 @@ const App: React.FC = () => {
         </button>
       )}
 
-      {/* MODAL CARRITO */}
       {showCart && (
         <div className="fixed inset-0 bg-black/90 backdrop-blur-md z-[100] flex items-end animate-in fade-in duration-300">
           <div className="bg-slate-900 w-full rounded-t-[3.5rem] p-8 max-h-[90vh] flex flex-col shadow-2xl border-t border-white/10">
@@ -387,7 +378,6 @@ const App: React.FC = () => {
         </div>
       )}
 
-      {/* FOOTER NAV PARA ADMIN */}
       {userRole === 'admin' && (
         <nav className="no-print fixed bottom-0 left-0 right-0 bg-black/95 backdrop-blur-2xl border-t border-white/10 py-4 px-10 flex justify-around items-center z-50">
           <button onClick={() => setView('inventory')} className={`flex flex-col items-center gap-1.5 transition-all ${view === 'inventory' ? 'text-pink-600 scale-110' : 'text-slate-600'}`}>
@@ -419,15 +409,12 @@ const LoginScreen = ({ onLogin }: any) => {
   return (
     <div className="h-screen bg-black flex items-center justify-center p-8 overflow-hidden relative">
       <div className="absolute top-0 left-0 w-full h-full bg-pink-600/10 blur-[150px] opacity-50"></div>
-      <div className="absolute bottom-0 right-0 w-full h-full bg-blue-600/5 blur-[150px] opacity-30"></div>
-      
       <div className="w-full max-w-xs text-center space-y-12 relative z-10">
         <div className="space-y-4">
           <div className="w-28 h-28 bg-pink-600 rounded-[2.5rem] flex items-center justify-center text-6xl font-black italic rotate-6 mx-auto shadow-2xl shadow-pink-600/40 border-4 border-white/10">PS</div>
           <h1 className="text-4xl font-black uppercase italic leading-none text-white tracking-tighter">PowerSport</h1>
           <p className="text-[9px] font-black text-pink-500 uppercase tracking-[0.5em] opacity-80">SISTEMA INTEGRAL</p>
         </div>
-        
         <div className="space-y-4">
           <div className="space-y-2">
             <p className="text-[8px] font-black text-slate-500 uppercase italic tracking-widest">Ingresa tu código de acceso</p>
@@ -440,11 +427,6 @@ const LoginScreen = ({ onLogin }: any) => {
             />
           </div>
           <button onClick={() => onLogin(code)} className="w-full bg-pink-600 py-6 rounded-3xl font-black uppercase italic text-white shadow-xl shadow-pink-600/30 active:scale-95 transition-all text-sm tracking-widest">Entrar al Sistema</button>
-        </div>
-        
-        <div className="pt-8 space-y-1">
-          <p className="text-[7px] text-slate-700 font-bold uppercase italic tracking-widest">Seguridad Encriptada</p>
-          <p className="text-[7px] text-slate-800 font-bold uppercase italic tracking-widest">© 2024 PowerSport Argentina</p>
         </div>
       </div>
     </div>
