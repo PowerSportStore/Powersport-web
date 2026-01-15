@@ -1,0 +1,8 @@
+
+{
+  "name": "PowerSport Store - Inventory System",
+  "description": "Sistema de gestión de inventario y catálogo digital para PowerSport.",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}
